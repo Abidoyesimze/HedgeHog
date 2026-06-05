@@ -1,0 +1,8 @@
+# Environment files — never commit private keys
+.env
+.env.local
+.env*.local
+
+# OS
+.DS_Store
+Thumbs.db
