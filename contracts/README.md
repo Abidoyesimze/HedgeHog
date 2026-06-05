@@ -1,66 +1,46 @@
-## Foundry
+# Hedgehog — Smart Contracts
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+Foundry workspace containing all on-chain components of the Hedgehog delta-neutral LP protocol.
 
-Foundry consists of:
+## Contracts
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+| Contract | Chain | Description |
+|---|---|---|
+| `HedgehogHook.sol` | Unichain | Uniswap v4 hook — fires on add/remove liquidity and swap |
+| `HedgeVault.sol` | Unichain | USDC vault, ERC-20 shares, AVS instruction verification, bridge wiring |
+| `HedgehogArbitrum.sol` | Arbitrum | Receives bridged USDC, drives GMX perps positions |
+| `HedgehogServiceManager.sol` | Unichain | EigenLayer AVS operator registry + task logging |
+| `GmxAdapter.sol` | Arbitrum | Full GMX v2 MarketIncrease/Decrease order interface |
+| `MockAdapter.sol` | Any | Test adapter — no external calls |
+| `AcrossBridge.sol` | Unichain | Across SpokePool `depositV3` wrapper |
 
-## Documentation
+## Setup
 
-https://book.getfoundry.sh/
+```bash
+# Install dependencies
+forge install Uniswap/v4-core --no-git
+forge install Uniswap/v4-periphery --no-git
+forge install OpenZeppelin/openzeppelin-contracts --no-git
 
-## Usage
-
-### Build
-
-```shell
-$ forge build
+cp .env.example .env
 ```
 
-### Test
+## Build & Test
 
-```shell
-$ forge test
+```bash
+forge build
+forge test -vv          # 19 tests, all passing
+forge test --gas-report
 ```
 
-### Format
+## Deploy
 
-```shell
-$ forge fmt
+```bash
+# 1. Deploy Arbitrum side first
+forge script script/Deploy.s.sol:DeployArbitrum --rpc-url $ARBITRUM_SEPOLIA_RPC --private-key $PRIVATE_KEY --broadcast
+
+# 2. Set ARBITRUM_RECEIVER in .env, then deploy Unichain side
+forge script script/Deploy.s.sol:DeployUnichain --rpc-url $UNICHAIN_SEPOLIA_RPC --private-key $PRIVATE_KEY --broadcast
 ```
 
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+See the [root README](../README.md) for full documentation.
