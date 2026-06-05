@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Next.js build
+.next/
+out/
+
+# Environment — contains WalletConnect ID
+.env.local
+.env
+
+# Debug
+npm-debug.log*
+
+# Build script
+build.sh
