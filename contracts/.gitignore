@@ -1,0 +1,12 @@
+# Build artifacts
+out/
+cache/
+broadcast/
+.env
+
+# Foundry dependencies (use forge install to restore)
+lib/
+
+# Node (dotenv helper)
+node_modules/
+package-lock.json
