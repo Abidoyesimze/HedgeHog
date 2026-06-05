@@ -35,7 +35,7 @@
 
 Hedgehog is a **Uniswap v4 hook** that eliminates impermanent loss (IL) for liquidity providers by automatically opening delta-neutral hedges on GMX (a cross-chain perpetuals exchange). The hedge sizing is computed off-chain by an **EigenLayer AVS** operator and settled on-chain via signed instructions. Collateral is bridged cross-chain using **Across Protocol**, and all accounting is denominated in **USDC (Circle)**.
 
-Built for **UHI9 Hookathon (April–June 2026)**, targeting the theme: **"Yield-Protected AMM"**.
+ targeting the theme: **"Yield-Protected AMM"**.
 
 ---
 
